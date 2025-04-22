@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 
 #include <math.h>
 
-#include <math_utils.h>
+#include <pixenals_math_utils.h>
 
 typedef PixtyV2_I8 V2_I8;
 typedef PixtyV2_I16 V2_I16;

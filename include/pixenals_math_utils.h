@@ -5,7 +5,7 @@ SPDX-License-Identifier: Apache-2.0
 
 #pragma once
 
-#include <pixenals_types.h>
+#include "../../pixenals-types/include/pixenals_types.h"
 
 #define PIX_MATH_EPSILON .0000001f
 #define pixmF32_EQL_INTERN(a, b) (fabsf((a) - (b)) <= PIX_MATH_EPSILON)
