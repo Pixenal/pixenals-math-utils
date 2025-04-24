@@ -8,6 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 #include "../../pixenals-types/include/pixenals_types.h"
 
 #define PIX_MATH_EPSILON .0000001f
+#ifdef PIX_MATH_USE_EPSILON
 #define pixmF32_EQL_INTERN(a, b) (fabsf((a) - (b)) <= PIX_MATH_EPSILON)
 #define pixmF64_EQL_INTERN(a, b) (fabs((a) - (b)) <= PIX_MATH_EPSILON)
 #define pixmF32_NOTEQL_INTERN(a, b) (fabsf((a) - (b)) > PIX_MATH_EPSILON)
@@ -20,6 +21,20 @@ SPDX-License-Identifier: Apache-2.0
 #define pixmF64_GREATEQL_INTERN(a, b) (pixmF64_GREAT_INTERN(a, b) || pixmF64_EQL_INTERN(a, b))
 #define pixmF32_LESSEQL_INTERN(a, b) (pixmF32_LESS_INTERN(a, b) || pixmF32_EQL_INTERN(a, b))
 #define pixmF64_LESSEQL_INTERN(a, b) (pixmF64_LESS_INTERN(a, b) || pixmF64_EQL_INTERN(a, b))
+#else
+#define pixmF32_EQL_INTERN(a, b) ((a) == (b))
+#define pixmF64_EQL_INTERN(a, b) ((a) == (b))
+#define pixmF32_NOTEQL_INTERN(a, b) ((a) != (b))
+#define pixmF64_NOTEQL_INTERN(a, b) ((a) != (b))
+#define pixmF32_GREAT_INTERN(a, b) ((a) > (b))
+#define pixmF64_GREAT_INTERN(a, b) ((a) > (b))
+#define pixmF32_LESS_INTERN(a, b) ((a) < (b))
+#define pixmF64_LESS_INTERN(a, b) ((a) < (b))
+#define pixmF32_GREATEQL_INTERN(a, b) ((a) >= (b))
+#define pixmF64_GREATEQL_INTERN(a, b) ((a) >= (b))
+#define pixmF32_LESSEQL_INTERN(a, b) ((a) <= (b))
+#define pixmF64_LESSEQL_INTERN(a, b) ((a) <= (b))
+#endif
 #define F32_EQL ,F32_EQL_INTERN,
 #define F64_EQL ,F64_EQL_INTERN,
 #define F32_NOTEQL ,F32_NOTEQL_INTERN,
