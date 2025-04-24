@@ -46,7 +46,7 @@ SPDX-License-Identifier: Apache-2.0
 
 static inline
 float pixmF32Lerp(float a, float b, float alpha) {
-	return b * alpha + (1.0 - alpha) * a;
+	return b * alpha + (1.0f - alpha) * a;
 }
 
 static inline
@@ -117,7 +117,9 @@ PixtyV2_F64 pixmV2F64LineNormal(PixtyV2_F64 a);
 PixtyV2_F32 pixmV2F32ModScalar(PixtyV2_F32 a, float b);
 void pixmV2F32ModEqualScalar(PixtyV2_F32 *pA, float b);
 float pixmV2F32SquareLen(PixtyV2_F32 a);
+double pixmV2F64SquareLen(PixtyV2_F64 a);
 float pixmV2F32Len(PixtyV2_F32 a);
+double pixmV2F64Len(PixtyV2_F64 a);
 float pixmV2F32TriArea(PixtyV2_F32 a, PixtyV2_F32 b, PixtyV2_F32 c);
 float pixmV2F32Determinate(PixtyV2_F32 a, PixtyV2_F32 b);
 double pixmV2F64Determinate(PixtyV2_F64 a, PixtyV2_F64 b);

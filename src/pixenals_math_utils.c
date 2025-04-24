@@ -333,8 +333,16 @@ F32 pixmV2F32SquareLen(V2_F32 a) {
 	return a.d[0] * a.d[0] + a.d[1] * a.d[1];
 }
 
+F64 pixmV2F64SquareLen(V2_F64 a) {
+	return a.d[0] * a.d[0] + a.d[1] * a.d[1];
+}
+
 F32 pixmV2F32Len(V2_F32 a) {
 	return sqrtf(pixmV2F32SquareLen(a));
+}
+
+F64 pixmV2F64Len(V2_F64 a) {
+	return sqrt(pixmV2F64SquareLen(a));
 }
 
 F32 pixmV2F32TriArea(V2_F32 a, V2_F32 b, V2_F32 c) {
