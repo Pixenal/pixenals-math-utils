@@ -88,6 +88,7 @@ PixtyV3_F64 pixmV3F64Subtract(PixtyV3_F64 a, PixtyV3_F64 b);
 void pixmV3F32AddEqual(PixtyV3_F32 *pA, PixtyV3_F32 b);
 bool pixmV3F32Equal(PixtyV3_F32 a, PixtyV3_F32 b);
 bool pixmV3F64Equal(PixtyV3_F64 a, PixtyV3_F64 b);
+bool pixmV3F32NotEqual(PixtyV3_F32 a, PixtyV3_F32 b);
 bool pixmV3F32GreaterThan(PixtyV3_F32 a, PixtyV3_F32 b);
 bool pixmV3F32LessThan(PixtyV3_F32 a, PixtyV3_F32 b);
 PixtyV3_F32 pixmV3F32Lerp(PixtyV3_F32 a, PixtyV3_F32 b, float alpha);
@@ -195,6 +196,7 @@ float pixmFloor(float a);
 #define V3ADDEQL ,V3F32AddEqual,
 #define V3EQL ,V3F32Equal,
 #define V364EQL ,V3F64Equal,
+#define V3NOTEQL ,V3F32NotEqual,
 #define V3GREAT ,V3F32GreaterThan,
 #define V3LESS ,V3F32LessThan,
 #define V3CROSS ,V3F32Cross,

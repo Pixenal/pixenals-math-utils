@@ -129,6 +129,13 @@ bool pixmV3F64Equal(V3_F64 a, V3_F64 b) {
 		_(a.d[0] F64_EQL b.d[0]) && _(a.d[1] F64_EQL b.d[1]) && _(a.d[2] F64_EQL b.d[2]);
 }
 
+bool pixmV3F32NotEqual(PixtyV3_F32 a, PixtyV3_F32 b) {
+	return
+		_(a.d[0] F32_NOTEQL b.d[0]) ||
+		_(a.d[1] F32_NOTEQL b.d[1]) ||
+		_(a.d[2] F32_NOTEQL b.d[2]);
+}
+
 bool pixmV3F32GreaterThan(V3_F32 a, V3_F32 b) {
 	return
 		_(a.d[0] F32_GREAT b.d[0]) &&
