@@ -106,7 +106,11 @@ float pixmV3F32TriHeight(PixtyV3_F32 a, PixtyV3_F32 b, PixtyV3_F32 c);
 float pixmV3F32SquareLen(PixtyV3_F32);
 float pixmV3F32Len(PixtyV3_F32 a);
 float pixmV3F32TriArea(PixtyV3_F32 a, PixtyV3_F32 b, PixtyV3_F32 c);
-PixtyV3_F32 pixmCartesianToBarycentric(const PixtyV2_F32 *pTri, const PixtyV2_F32 *pPoint);
+PixtyV3_F32 pixmCartesianToBarycentric(
+	const PixtyV3_F32 *pTri32,
+	const PixtyV3_F32 *pPoint32,
+	const PixtyV3_F32 *pNormal
+);
 PixtyV3_F32 pixmBarycentricToCartesian(const PixtyV3_F32 *pTri, PixtyV3_F32 point);
 
 PixtyV2_F32 pixmV2F32Abs(PixtyV2_F32 a);

@@ -653,33 +653,46 @@ V3_F32 pixmBarycentricToCartesian(const V3_F32 *pTri, V3_F32 point) {
 	return pointCartesian;
 }
 
-V3_F32 pixmCartesianToBarycentric(const V2_F32 *pTri32, const V2_F32 *pPoint32) {
-	V3_F32 pointBc = {0};
+V3_F32 pixmCartesianToBarycentric(
+	const V3_F32 *pTri32,
+	const V3_F32 *pPoint32,
+	const V3_F32 *pNormal
+) {
 	F64 derta = .0;
 	F64 dertau = .0;
 	F64 dertav = .0;
 
 	//Convert to F64
-	V3_F64 pPoint = {.d = {pPoint32->d[0], pPoint32->d[1]}};
-	V3_F64 pTri[3] = {0};
+	V2_F64 point = {.d = {pPoint32->d[0], pPoint32->d[1]}};
+	V2_F64 tri[3] = {0};
 	for (I32 i = 0; i < 3; ++i) {
-		pTri[i].d[0] = pTri32[i].d[0];
-		pTri[i].d[1] = pTri32[i].d[1];
+		if ((pNormal->d[2] == 1.0) || (pNormal->d[2] == -1.0)) {
+			tri[i] = (V2_F64){.d = {(F64)pTri32[i].d[0], (F64)pTri32[i].d[1]}};
+			point = (V2_F64){.d = {(F64)pPoint32->d[0], (F64)pPoint32->d[1]}};
+		}
+		else if ((pNormal->d[1] == 1.0) || (pNormal->d[1] == -1.0) || (pNormal->d[0] == .0f)) {
+			tri[i] = (V2_F64){.d = {(F64)pTri32[i].d[0], (F64)pTri32[i].d[2]}};
+			point = (V2_F64){.d = {(F64)pPoint32->d[0], (F64)pPoint32->d[2]}};
+		}
+		else {
+			tri[i] = (V2_F64){.d = {(F64)pTri32[i].d[1], (F64)pTri32[i].d[2]}};
+			point = (V2_F64){.d = {(F64)pPoint32->d[1], (F64)pPoint32->d[2]}};
+		}
 	}
-
 	//Perform cramers rule
-	derta = (pTri[0].d[0] * pTri[1].d[1]) - (pTri[0].d[0] * pTri[2].d[1]) -
-	        (pTri[1].d[0] * pTri[0].d[1]) + (pTri[1].d[0] * pTri[2].d[1]) +
-	        (pTri[2].d[0] * pTri[0].d[1]) - (pTri[2].d[0] * pTri[1].d[1]);
+	derta = (tri[0].d[0] * tri[1].d[1]) - (tri[0].d[0] * tri[2].d[1]) -
+	        (tri[1].d[0] * tri[0].d[1]) + (tri[1].d[0] * tri[2].d[1]) +
+	        (tri[2].d[0] * tri[0].d[1]) - (tri[2].d[0] * tri[1].d[1]);
 	//Get determinate of Au
-	dertau = (pPoint.d[0] * pTri[1].d[1]) - (pPoint.d[0] * pTri[2].d[1]) -
-	         (pTri[1].d[0] * pPoint.d[1]) + (pTri[1].d[0] * pTri[2].d[1]) +
-	         (pTri[2].d[0] * pPoint.d[1]) - (pTri[2].d[0] * pTri[1].d[1]);
+	dertau = (point.d[0] * tri[1].d[1]) - (point.d[0] * tri[2].d[1]) -
+	         (tri[1].d[0] * point.d[1]) + (tri[1].d[0] * tri[2].d[1]) +
+	         (tri[2].d[0] * point.d[1]) - (tri[2].d[0] * tri[1].d[1]);
 	//Get determinate of Av
-	dertav = (pTri[0].d[0] * pPoint.d[1]) - (pTri[0].d[0] * pTri[2].d[1]) -
-	         (pPoint.d[0] * pTri[0].d[1]) + (pPoint.d[0] * pTri[2].d[1]) +
-	         (pTri[2].d[0] * pTri[0].d[1]) - (pTri[2].d[0] * pPoint.d[1]);
-
+	dertav = (tri[0].d[0] * point.d[1]) - (tri[0].d[0] * tri[2].d[1]) -
+	         (point.d[0] * tri[0].d[1]) + (point.d[0] * tri[2].d[1]) +
+	         (tri[2].d[0] * tri[0].d[1]) - (tri[2].d[0] * point.d[1]);
+	
+	V3_F32 pointBc = {0};
 	//u = dert(Au) / dert(A)
 	pointBc.d[0] = (F32)(dertau / derta);
 	//u = dert(Av) / dert(A)
