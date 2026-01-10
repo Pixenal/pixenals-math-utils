@@ -636,6 +636,19 @@ bool pixmV4F64Equal(V4_F64 a, V4_F64 b) {
 		_(a.d[3] F64_EQL b.d[3]);
 }
 
+void pixmV4F32DivideEqualScalar(V4_F32 *pA, F32 b) {
+	pA->d[0] /= b;
+	pA->d[1] /= b;
+	pA->d[2] /= b;
+	pA->d[3] /= b;
+}
+
+PixtyV4_F32 pixmV4F32DivideScalar(PixtyV4_F32 a, float b) {
+	return (PixtyV4_F32){
+		.d = {a.d[0] / b, a.d[1] / b, a.d[2] / b, a.d[3] / b}
+	};
+}
+
 V3_F32 pixmBarycentricToCartesian(const V3_F32 *pTri, V3_F32 point) {
 	V3_F32 pointCartesian = {0};
 	pointCartesian.d[0] =

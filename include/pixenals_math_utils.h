@@ -184,6 +184,8 @@ bool pixmM3x3IsFinite(const PixtyM3x3 *pA);
 
 bool pixmV4F32Equal(PixtyV4_F32 a, PixtyV4_F32 b);
 bool pixmV4F64Equal(PixtyV4_F64 a, PixtyV4_F64 b);
+void pixmV4F32DivideEqualScalar(PixtyV4_F32 *pA, float b);
+PixtyV4_F32 pixmV4F32DivideScalar(PixtyV4_F32 a, float b);
 
 float pixmFloor(float a);
 
@@ -240,6 +242,8 @@ float pixmFloor(float a);
 
 #define V4EQL ,V4F32Equal,
 #define V464EQL ,V4F64Equal,
+#define V4DIVSEQL ,V4F32DivideEqualScalar,
+#define V4DIVS ,V4F32DivideScalar,
 
 #define V2I8EQL ,V2I8Equal,
 #define V2I16EQL ,V2I16Equal,
