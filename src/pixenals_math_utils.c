@@ -41,6 +41,25 @@ typedef uint64_t U64;
 typedef float F32;
 typedef double F64;
 
+static
+M3x3 pixmM3x3Adjugate(const M3x3 *pA) {
+	M3x3 c = {0};
+	c.d[0][0] = pA->d[1][1] * pA->d[2][2] - pA->d[2][1] * pA->d[1][2];
+	c.d[0][1] = pA->d[0][1] * pA->d[2][2] - pA->d[2][1] * pA->d[0][2];
+	c.d[0][2] = pA->d[0][1] * pA->d[1][2] - pA->d[1][1] * pA->d[0][2];
+	c.d[1][0] = pA->d[1][0] * pA->d[2][2] - pA->d[2][0] * pA->d[1][2];
+	c.d[1][1] = pA->d[0][0] * pA->d[2][2] - pA->d[2][0] * pA->d[0][2];
+	c.d[1][2] = pA->d[0][0] * pA->d[1][2] - pA->d[1][0] * pA->d[0][2];
+	c.d[2][0] = pA->d[1][0] * pA->d[2][1] - pA->d[2][0] * pA->d[1][1];
+	c.d[2][1] = pA->d[0][0] * pA->d[2][1] - pA->d[2][0] * pA->d[0][1];
+	c.d[2][2] = pA->d[0][0] * pA->d[1][1] - pA->d[1][0] * pA->d[0][1];
+	c.d[1][0] *= -1.0f;
+	c.d[0][1] *= -1.0f;
+	c.d[2][1] *= -1.0f;
+	c.d[1][2] *= -1.0f;
+	return c;
+}
+
 V3_F32 pixmBarycentricToCartesian(const V3_F32 *pTri, V3_F32 point) {
 	V3_F32 pointCartesian = {0};
 	pointCartesian.d[0] =

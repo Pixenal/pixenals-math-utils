@@ -71,7 +71,7 @@ double pixmF64Lerp(double a, double b, double alpha) {
 	return b * alpha + (1.0 - alpha) * a;
 }
 
-PixtyM3x3 m3x3Adjugate(const PixtyM3x3 *pA);
+PixtyM3x3 pixmM3x3Adjugate(const PixtyM3x3 *pA);
 PixtyV3_F32 pixmCartesianToBarycentric(
 	const PixtyV3_F32 *pTri32,
 	const PixtyV3_F32 *pPoint32,
@@ -753,8 +753,8 @@ PixtyM3x3 pixmM3x3FromM4x4(const PixtyM4x4 *pA) {
 
 static inline
 PixtyM3x3 pixmM3x3Invert(const PixtyM3x3 *pA) {
-	float determinate = m3x3Determinate(pA);
-	PixtyM3x3 inverse = m3x3Adjugate(pA);
+	float determinate = pixmM3x3Determinate(pA);
+	PixtyM3x3 inverse = pixmM3x3Adjugate(pA);
 	pixmM3x3MultiplyEqualScalar(&inverse, 1.0f / determinate);
 	return inverse;
 }
