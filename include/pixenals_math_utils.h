@@ -366,6 +366,12 @@ PixtyV2_F32 pixmV2F32Subtract(PixtyV2_F32 a, PixtyV2_F32 b) {
 #define V2SUB ,V2F32Subtract,
 
 static inline
+PixtyV2_F32 pixmV2F32Divide(PixtyV2_F32 a, PixtyV2_F32 b) {
+	return (PixtyV2_F32) {a.d[0] / b.d[0], a.d[1] / b.d[1]};
+}
+#define V2DIV ,V2F32Divide,
+
+static inline
 PixtyV2_F64 pixmV2F64Subtract(PixtyV2_F64 a, PixtyV2_F64 b) {
 	return (PixtyV2_F64) {a.d[0] - b.d[0], a.d[1] - b.d[1]};
 }
