@@ -41,7 +41,6 @@ typedef uint64_t U64;
 typedef float F32;
 typedef double F64;
 
-static
 M3x3 pixmM3x3Adjugate(const M3x3 *pA) {
 	M3x3 c = {0};
 	c.d[0][0] = pA->d[1][1] * pA->d[2][2] - pA->d[2][1] * pA->d[1][2];
