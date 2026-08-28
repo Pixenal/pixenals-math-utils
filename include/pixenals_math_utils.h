@@ -9,6 +9,9 @@ SPDX-License-Identifier: Apache-2.0
 
 #include "../../pixenals-types/include/pixenals_types.h"
 
+#define PIXM_D_PI 3.141592653589793238
+#define PIXM_F_PI 3.14159265f
+
 #define PIX_MATH_EPSILON .0000001f
 #ifdef PIX_MATH_USE_EPSILON
 #define F32_EQL_INTERN(a, b) (fabsf((a) - (b)) <= PIX_MATH_EPSILON)
@@ -271,6 +274,7 @@ void pixmV3F32MultiplyEqualPixtyM3x3(PixtyV3_F32 *pA, const PixtyM3x3 *pB) {
 }
 #define V3MULEQLM3X3 ,V3F32MultiplyEqualPixtyM3x3,
 
+//TODO us or uk spelling, pick one
 static inline
 PixtyV3_F32 pixmV3F32Normalize(PixtyV3_F32 a) {
 	float magnitude = sqrtf(a.d[0] * a.d[0] + a.d[1] * a.d[1] + a.d[2] * a.d[2]);
