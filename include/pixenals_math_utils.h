@@ -121,6 +121,13 @@ PixtyV3_F32 pixmDivideByW(const PixtyV4_F32 *pA) {
 }
 
 static inline
+PixtyV3_F32 pixmV3F32Multiply(PixtyV3_F32 a, PixtyV3_F32 b) {
+	return (PixtyV3_F32) {a.d[0] * b.d[0], a.d[1] * b.d[1], a.d[2] * b.d[2]};
+}
+#define V3MUL ,V3F32Multiply,
+
+
+static inline
 PixtyV3_F32 pixmV3F32MultiplyScalar(PixtyV3_F32 a, float b) {
 	return (PixtyV3_F32) {a.d[0] * b, a.d[1] * b, a.d[2] * b};
 }
