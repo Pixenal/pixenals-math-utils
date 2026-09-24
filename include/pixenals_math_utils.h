@@ -74,6 +74,14 @@ double pixmF64Lerp(double a, double b, double alpha) {
 	return b * alpha + (1.0 - alpha) * a;
 }
 
+static inline
+PixtyM3x3 pixmM3x3Transpose(const PixtyM3x3 *pA) {
+	return (PixtyM3x3){
+		pA->d[0][0], pA->d[1][0], pA->d[2][0],
+		pA->d[0][1], pA->d[1][1], pA->d[2][1],
+		pA->d[0][2], pA->d[1][2], pA->d[2][2]
+	};
+}
 PixtyM3x3 pixmM3x3Adjugate(const PixtyM3x3 *pA);
 PixtyV3_F32 pixmCartesianToBarycentric(
 	const PixtyV3_F32 *pTri32,
@@ -85,21 +93,11 @@ PixtyV3_F32 pixmBarycentricToCartesian(const PixtyV3_F32 *pTri, PixtyV3_F32 poin
 static inline
 PixtyV4_F32 pixmV4F32MultiplyM4x4(PixtyV4_F32 a, const PixtyM4x4 *pB) {
 	PixtyV4_F32 c = {0};
-	c.d[0] = 
-		a.d[0] * pB->d[0][0] +
-		a.d[1] * pB->d[1][0] +
-		a.d[2] * pB->d[2][0] +
-		a.d[3] * pB->d[3][0];
-	c.d[1] =
-		a.d[0] * pB->d[0][1] +
-		a.d[1] * pB->d[1][1] +
-		a.d[2] * pB->d[2][1] +
-		a.d[3] * pB->d[3][1];
-	c.d[2] =
-		a.d[0] * pB->d[0][2] +
-		a.d[1] * pB->d[1][2] +
-		a.d[2] * pB->d[2][2] +
-		a.d[3] * pB->d[3][2];
+	for (int32_t i = 0; i < 4; ++i) {
+		for (int32_t j = 0; j < 4; ++j) {
+			c.d[i] += a.d[j] * pB->d[j][i];
+		}
+	}
 	return c;
 }
 
@@ -745,17 +743,11 @@ void pixmM3x3MultiplyEqualScalar(PixtyM3x3 *pA, float b) {
 
 static inline
 PixtyM3x3 pixmM3x3FromV3_F32(PixtyV3_F32 a, PixtyV3_F32 b, PixtyV3_F32 c) {
-	PixtyM3x3 mat = {0};
-	mat.d[0][0] = a.d[0];
-	mat.d[0][1] = a.d[1];
-	mat.d[0][2] = a.d[2];
-	mat.d[1][0] = b.d[0];
-	mat.d[1][1] = b.d[1];
-	mat.d[1][2] = b.d[2];
-	mat.d[2][0] = c.d[0];
-	mat.d[2][1] = c.d[1];
-	mat.d[2][2] = c.d[2];
-	return mat;
+	return (PixtyM3x3){
+		a.d[0], a.d[1], a.d[2],
+		b.d[0], b.d[1], b.d[2],
+		c.d[0], c.d[1], c.d[2]
+	};
 }
 
 static inline
@@ -785,14 +777,28 @@ bool pixmM3x3IsFinite(const PixtyM3x3 *pA) {
 }
 
 static inline
+PixtyM3x3 pixmM3x3Multiply(PixtyM3x3 *pA, PixtyM3x3 *pB) {
+	PixtyM3x3 c = {0};
+	for (int32_t i = 0; i < 3; ++i) {
+		for (int32_t j = 0; j < 3; ++j) {
+			c.d[i][j] =
+				pA->d[i][0] * pB->d[0][j] +
+				pA->d[i][1] * pB->d[1][j] +
+				pA->d[i][2] * pB->d[2][j];
+		}
+	}
+	return c;
+}
+#define M3X3MUL ,M3x3Multiply,
+
+static inline
 PixtyM2x3 pixmM2x2MultiplyM2x3(PixtyM2x2 a, PixtyM2x3 b) {
 	PixtyM2x3 c = {0};
-	c.d[0][0] = a.d[0][0] * b.d[0][0] + a.d[0][1] * b.d[1][0];
-	c.d[0][1] = a.d[0][0] * b.d[0][1] + a.d[0][1] * b.d[1][1];
-	c.d[0][2] = a.d[0][0] * b.d[0][2] + a.d[0][1] * b.d[1][2];
-	c.d[1][0] = a.d[1][0] * b.d[0][0] + a.d[1][1] * b.d[1][0];
-	c.d[1][1] = a.d[1][0] * b.d[0][1] + a.d[1][1] * b.d[1][1];
-	c.d[1][2] = a.d[1][0] * b.d[0][2] + a.d[1][1] * b.d[1][2];
+	for (int32_t i = 0; i < 2; ++i) {
+		for (int32_t j = 0; j < 3; ++j) {
+			c.d[i][j] = a.d[i][0] * b.d[0][j] + a.d[i][1] * b.d[1][j];
+		}
+	}
 	return c;
 }
 
